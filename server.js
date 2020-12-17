@@ -4,6 +4,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const path = require("path");
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -18,6 +19,10 @@ app.use(cors("*"));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+//* Error handle middlewares
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(PORT, async () => {
   try {
